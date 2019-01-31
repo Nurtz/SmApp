@@ -1,0 +1,96 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+namespace SmApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //ElapsedDays();
+            //AllNumbersSum();
+            //NextLeapYear();
+            EmailIsValid();
+            Console.ReadKey();
+        }
+
+        static void ElapsedDays()
+        {
+            var date = DateTime.Now.ToShortDateString();
+
+            Console.WriteLine(date);
+
+            DateTime FirstDay = new DateTime(DateTime.Now.Year, 1, 1);
+
+            System.TimeSpan elapsed = DateTime.Parse(date).Subtract(FirstDay);
+
+            // Get number of days ago.
+            double daysAgo = elapsed.TotalDays;
+            Console.WriteLine("{1} days have elapsed",
+                FirstDay,
+                daysAgo.ToString("0"));
+        }
+        // Borrowed solution :(.
+        static void NextLeapYear()
+        {
+            var currentYear = DateTime.Now.Year;
+            var startingDay = "";
+            var answer = false;
+
+            do
+            {
+                ++currentYear;
+                do
+                {
+                    answer = DateTime.IsLeapYear(currentYear);
+                    if (answer == false)
+                    {
+                        ++currentYear;
+                    }
+                } while (answer == false);
+                DateTime LeapYearStartDate = new DateTime(currentYear, 1, 1);
+                startingDay = LeapYearStartDate.DayOfWeek.ToString();
+            } while (startingDay != "Tuesday");
+            Console.WriteLine("The next leap year starting with Tuesday is {0}.", currentYear);
+
+        }
+        // Calculates single numbers to sum, needs to be improved!
+        static void AllNumbersSum()
+        {
+            int n, sum = 0, m;
+            Console.Write("Enter numbers you want to sum: ");
+            n = int.Parse(Console.ReadLine());
+            while (n > 0)
+            {
+                m = n % 10;
+                sum = sum + m;
+                n = n / 10;
+            }
+            Console.Write("Sum is= " + sum);
+        }
+
+        static void EmailIsValid()
+        {
+            string emailID;
+            Console.Write("Please insert valid e-mail aadress: ");
+            emailID = (Console.ReadLine());
+
+            bool isEmail = Regex.IsMatch(emailID, @"\A(?:[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)\Z");
+
+            if (isEmail)
+            {
+               Console.WriteLine("Valid");
+            }
+            else
+                if (isEmail == false) 
+            {
+                Console.WriteLine("E-mail aadress is not valid.");
+            }
+        }
+    }
+}
